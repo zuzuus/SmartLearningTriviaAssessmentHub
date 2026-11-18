@@ -1,1 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- MAIN ACTIVITY (LANDSCAPE): wolf scene on the left, registration form on the right.
+     Same view ids as the portrait layout, so MainActivity.java works unchanged. -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <ScrollView
+        android:id="@+id/scrollMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/cave_base"
+        android:fillViewport="true"
+        tools:context=".MainActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Splits the screen: 45% wolf scene, 55% form -->
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideSplit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.45" />
+
+            <!-- Cave texture behind the form side -->
+            <ImageView
+                android:id="@+id/ivCave"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_cave"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideSplit"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- LEFT: wolf howling at the moon, centred vertically -->
+            <ImageView
+                android:id="@+id/ivHero"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="@string/cd_hero"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_hero"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="3:2"
+                app:layout_constraintEnd_toStartOf="@id/guideSplit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- RIGHT: title + form, packed and centred in the right half -->
+            <TextView
+                android:id="@+id/tvTitle"
+                style="@style/PixelTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/title_smart_learning"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@id/tvSubtitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideSplit"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/tvSubtitle"
+                style="@style/PixelLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="4"
+                android:shadowDy="4"
+                android:shadowRadius="0.01"
+                android:text="@string/title_trivia_hub"
+                android:textColor="@color/bone_white"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toTopOf="@id/tvQuest"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideSplit"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+            <TextView
+                android:id="@+id/tvQuest"
+                style="@style/RetroBody"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/title_quest"
+                android:textColor="@color/sky_blue"
+                app:layout_constraintBottom_toTopOf="@id/panelForm"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideSplit"
+                app:layout_constraintTop_toBottomOf="@id/tvSubtitle" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/panelForm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/bg_panel"
+                android:padding="16dp"
+                app:layout_constraintBottom_toTopOf="@id/tvFooter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideSplit"
+                app:layout_constraintTop_toBottomOf="@id/tvQuest"
+                app:layout_constraintWidth_max="420dp">
+
+                <TextView
+                    android:id="@+id/tvNewPlayer"
+                    style="@style/PixelLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_new_player"
+                    android:textColor="@color/moon_yellow"
+                    android:textSize="10sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvNameLabel"
+                    style="@style/PixelLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:labelFor="@id/etName"
+                    android:text="@string/label_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvNewPlayer" />
+
+                <EditText
+                    android:id="@+id/etName"
+                    style="@style/RetroInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:autofillHints="name"
+                    android:hint="@string/hint_name"
+                    android:inputType="textPersonName|textCapWords"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvNameLabel" />
+
+                <TextView
+                    android:id="@+id/tvNameError"
+                    style="@style/RetroBody"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/pink_error"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/etName" />
+
+                <TextView
+                    android:id="@+id/tvIdLabel"
+                    style="@style/PixelLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:labelFor="@id/etStudentId"
+                    android:text="@string/label_student_id"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvNameError" />
+
+                <EditText
+                    android:id="@+id/etStudentId"
+                    style="@style/RetroInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:hint="@string/hint_student_id"
+                    android:importantForAutofill="no"
+                    android:inputType="textCapCharacters|textNoSuggestions"
+                    android:maxLength="11"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvIdLabel" />
+
+                <TextView
+                    android:id="@+id/tvIdError"
+                    style="@style/RetroBody"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/pink_error"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/etStudentId" />
+
+                <TextView
+                    android:id="@+id/tvProgramLabel"
+                    style="@style/PixelLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:labelFor="@id/etProgram"
+                    android:text="@string/label_program"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvIdError" />
+
+                <EditText
+                    android:id="@+id/etProgram"
+                    style="@style/RetroInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:hint="@string/hint_program"
+                    android:importantForAutofill="no"
+                    android:inputType="textCapCharacters"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvProgramLabel" />
+
+                <TextView
+                    android:id="@+id/tvProgramError"
+                    style="@style/RetroBody"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/pink_error"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/etProgram" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnStart"
+                    style="@style/PixelButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/btn_start_game"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvProgramError" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tvFooter"
+                style="@style/RetroBody"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:shadowColor="@color/black"
+                android:shadowDx="4"
+                android:shadowDy="4"
+                android:shadowRadius="0.01"
+                android:text="@string/footer_main"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideSplit"
+                app:layout_constraintTop_toBottomOf="@id/panelForm" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
