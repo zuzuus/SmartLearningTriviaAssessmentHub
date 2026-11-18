@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Night / background -->
+    <color name="night">#FF13183A</color>
+    <color name="night_dark">#FF0B1030</color>
+    <color name="cave_base">#FF160F24</color>
+
+    <!-- Panels -->
+    <color name="panel">#FF1D2B53</color>
+    <color name="panel_highlight">#FF34478A</color>
+    <color name="option_default">#FF2B3A6E</color>
+    <color name="option_shade">#FF111A3A</color>
+    <color name="option_disabled">#FF1D2440</color>
+    <color name="input_fill">#FF0B1030</color>
+
+    <!-- 8-bit accents -->
+    <color name="moon_yellow">#FFFFEC27</color>
+    <color name="moon_orange">#FFFFA300</color>
+    <color name="neon_green">#FF00E436</color>
+    <color name="green_shade">#FF008751</color>
+    <color name="blood_red">#FFFF004D</color>
+    <color name="wrong_red">#FFD1003F</color>
+    <color name="wrong_shade">#FF8A0029</color>
+    <color name="pink_error">#FFFF6E8F</color>
+    <color name="sky_blue">#FF29ADFF</color>
+    <color name="sky_shade">#FF1567A8</color>
+
+    <!-- Text -->
+    <color name="bone_white">#FFFFF1E8</color>
+    <color name="silver">#FFC2C3C7</color>
+    <color name="muted_blue">#FF8B93C4</color>
+    <color name="stone_gray">#FF5F574F</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

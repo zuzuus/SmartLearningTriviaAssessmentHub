@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One row of the Result "battle log". Filled through Data Binding (ItemBreakdownBinding). -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+
+        <variable name="number" type="String" />
+        <variable name="questionText" type="String" />
+        <variable name="yourAnswer" type="String" />
+        <variable name="correctAnswer" type="String" />
+        <variable name="correct" type="boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_item_breakdown"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tvNumber"
+            style="@style/PixelLabel"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@{correct ? @drawable/bg_badge_correct : @drawable/bg_badge_wrong}"
+            android:gravity="center"
+            android:text="@{number}"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@drawable/bg_badge_correct"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/tvItemQuestion"
+            style="@style/RetroBody"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="@{questionText}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvNumber"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Which planet is known as the Red Planet?" />
+
+        <TextView
+            android:id="@+id/tvYourAnswer"
+            style="@style/RetroBody"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{@string/your_answer_format(yourAnswer)}"
+            android:textColor="@{correct ? @color/neon_green : @color/pink_error}"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvItemQuestion"
+            app:layout_constraintTop_toBottomOf="@id/tvItemQuestion"
+            tools:text="You: Mars" />
+
+        <TextView
+            android:id="@+id/tvCorrectAnswer"
+            style="@style/RetroBody"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{@string/correct_answer_format(correctAnswer)}"
+            android:textColor="@color/neon_green"
+            android:textSize="18sp"
+            android:visibility="@{correct ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvItemQuestion"
+            app:layout_constraintTop_toBottomOf="@id/tvYourAnswer"
+            tools:text="Answer: Mars" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Smart Learning &amp; Trivia Assessment Hub</string>
+
+    <!-- Main Activity -->
+    <string name="cd_hero">Pixel wolf howling at a full moon on a grassy hill</string>
+    <string name="title_smart_learning">SMART LEARNING</string>
+    <string name="title_trivia_hub">&amp; TRIVIA ASSESSMENT HUB</string>
+    <string name="title_quest">- FULL MOON QUEST -</string>
+    <string name="label_new_player">NEW PLAYER</string>
+    <string name="label_name">NAME</string>
+    <string name="label_student_id">STUDENT ID</string>
+    <string name="label_program">PROGRAM / GROUP</string>
+    <string name="hint_name">Enter your name</string>
+    <string name="hint_student_id">e.g. CBS24070636</string>
+    <string name="hint_program">e.g. CBS / 5</string>
+    <string name="btn_start_game">START GAME</string>
+    <string name="footer_main">Answer 10 riddles. Earn your pack rank!</string>
+
+    <!-- Validation -->
+    <string name="error_name_empty">! Name is required</string>
+    <string name="error_name_invalid">! Letters only, at least 3 characters</string>
+    <string name="error_id_empty">! Student ID is required</string>
+    <string name="error_id_invalid">! Format: 3 letters + 8 digits (CBS24070636)</string>
+    <string name="error_program_empty">! Program / group is required</string>
+    <string name="toast_fix_fields">Fix the red fields first, pup!</string>
+    <string name="toast_welcome">Welcome to the pack, %1$s!</string>
+
+    <!-- Quiz Activity -->
+    <string name="question_counter">Q %1$02d/%2$d</string>
+    <string name="score_format">SCORE %1$04d</string>
+    <string name="loading_questions">Summoning 10 riddles from the moon…</string>
+    <string name="btn_retry">TRY AGAIN</string>
+    <string name="btn_next">NEXT</string>
+    <string name="btn_finish">FINISH</string>
+    <string name="cd_feedback">Answer feedback picture</string>
+    <string name="verdict_ready">READY?</string>
+    <string name="verdict_correct">CORRECT!</string>
+    <string name="verdict_wrong">WRONG!</string>
+    <string name="caption_ready">Pick an answer, pup.</string>
+    <string name="sub_ready">The pack is watching…</string>
+    <string name="sub_correct">+1 point</string>
+    <string name="sub_wrong">Answer: %1$s</string>
+    <string name="caption_goated">\"wait we goated\"</string>
+    <string name="caption_pet">\"POV: you\'re being pet by a wolf\"</string>
+    <string name="caption_dumb">\"staring at you with my big dumb eyes\"</string>
+    <string name="caption_nose">\"when you accidentally open the front camera\"</string>
+    <string name="snack_correct">Nice bite! +1 point. AWOOO!</string>
+    <string name="snack_wrong">Ouch! Correct answer: %1$s</string>
+    <string name="snack_ok">OK</string>
+    <string name="error_network">No signal from the moon. Check your internet and try again.</string>
+    <string name="error_parse">The riddles came back scrambled. Try again.</string>
+    <string name="error_api_code">Trivia server busy (code %1$d). Wait 5 seconds and try again.</string>
+    <string name="toast_missing_player">Player data missing. Please register again.</string>
+
+    <!-- Result Activity -->
+    <string name="title_quest_complete">QUEST COMPLETE!</string>
+    <string name="player_format">PLAYER: %1$s · %2$s · %3$s</string>
+    <string name="label_your_rank">YOUR RANK</string>
+    <string name="rank_alpha">ALPHA WOLF</string>
+    <string name="rank_beta">BETA WOLF</string>
+    <string name="rank_omega">OMEGA WOLF</string>
+    <string name="percent_format">%1$d%%</string>
+    <string name="tag_alpha">Pack leader. AWOOOO!</string>
+    <string name="tag_beta">%1$d more for ALPHA!</string>
+    <string name="tag_omega">Rest. Study. Hunt again.</string>
+    <string name="caption_alpha">\"Full moon unlocked. You are the beast.\"</string>
+    <string name="caption_beta">\"Don\'t worry kitten, admin is an alpha wolf with a computer\"</string>
+    <string name="caption_omega">\"Staring at the sea, thinking about that one question…\"</string>
+    <string name="cd_rank">Rank picture</string>
+    <string name="label_correct">CORRECT</string>
+    <string name="label_wrong">WRONG</string>
+    <string name="label_total">TOTAL</string>
+    <string name="label_battle_log">BATTLE LOG</string>
+    <string name="your_answer_format">You: %1$s</string>
+    <string name="correct_answer_format">Answer: %1$s</string>
+    <string name="btn_play_again">PLAY AGAIN</string>
+    <string name="btn_new_player">NEW PLAYER</string>
+</resources>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.SmartLearningTriviaHub" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/moon_yellow</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorSecondary">@color/sky_blue</item>
+        <item name="android:windowBackground">@color/night</item>
+        <item name="android:statusBarColor">@color/night_dark</item>
+        <item name="android:navigationBarColor">@color/night_dark</item>
+    </style>
+
+    <!-- Reusable 8-bit text styles -->
+    <style name="PixelTitle">
+        <item name="android:fontFamily">@font/press_start_2p</item>
+        <item name="android:textColor">@color/moon_yellow</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:shadowColor">@color/blood_red</item>
+        <item name="android:shadowDx">5</item>
+        <item name="android:shadowDy">5</item>
+        <item name="android:shadowRadius">0.01</item>
+    </style>
+
+    <style name="PixelLabel">
+        <item name="android:fontFamily">@font/press_start_2p</item>
+        <item name="android:textColor">@color/silver</item>
+        <item name="android:textSize">9sp</item>
+    </style>
+
+    <style name="RetroBody">
+        <item name="android:fontFamily">@font/vt323</item>
+        <item name="android:textColor">@color/bone_white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="RetroInput" parent="RetroBody">
+        <item name="android:background">@drawable/bg_input</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:textColorHint">@color/muted_blue</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="PixelButton">
+        <item name="android:fontFamily">@font/press_start_2p</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/bg_button_yellow</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <style name="OptionButton">
+        <item name="android:fontFamily">@font/vt323</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/bone_white</item>
+        <item name="android:background">@drawable/bg_option_default</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="android:gravity">center_vertical|start</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+</resources>

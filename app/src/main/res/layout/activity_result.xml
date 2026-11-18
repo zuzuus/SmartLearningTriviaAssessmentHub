@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- RESULT ACTIVITY: rank, percentage, stats and a scrollable battle log. -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:id="@+id/scrollResult"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/night"
+        android:fillViewport="true"
+        tools:context=".ResultActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingTop="24dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="28dp">
+
+            <TextView
+                android:id="@+id/tvResultTitle"
+                style="@style/PixelTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_quest_complete"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvPlayer"
+                style="@style/RetroBody"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:textColor="@color/silver"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvResultTitle"
+                app:layout_constraintWidth_max="440dp"
+                tools:text="PLAYER: Siti · CBS24070636 · CBS / 5" />
+
+            <!-- Rank card -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardRank"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_panel"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPlayer"
+                app:layout_constraintWidth_max="440dp">
+
+                <ImageView
+                    android:id="@+id/ivRank"
+                    android:layout_width="120dp"
+                    android:layout_height="132dp"
+                    android:background="@drawable/bg_frame_yellow"
+                    android:contentDescription="@string/cd_rank"
+                    android:padding="4dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/img_rank_beta" />
+
+                <TextView
+                    android:id="@+id/tvRankLabel"
+                    style="@style/PixelLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/label_your_rank"
+                    app:layout_constraintBottom_toTopOf="@id/tvRank"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ivRank"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/tvRank"
+                    style="@style/PixelLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/sky_blue"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toTopOf="@id/tvPercent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvRankLabel"
+                    app:layout_constraintTop_toBottomOf="@id/tvRankLabel"
+                    tools:text="BETA WOLF" />
+
+                <TextView
+                    android:id="@+id/tvPercent"
+                    style="@style/PixelLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/moon_yellow"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toTopOf="@id/pbScore"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvRankLabel"
+                    app:layout_constraintTop_toBottomOf="@id/tvRank"
+                    tools:text="70%" />
+
+                <ProgressBar
+                    android:id="@+id/pbScore"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="14dp"
+                    android:layout_marginTop="8dp"
+                    android:max="100"
+                    android:progressDrawable="@drawable/progress_pixel"
+                    app:layout_constraintBottom_toTopOf="@id/tvTag"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvRankLabel"
+                    app:layout_constraintTop_toBottomOf="@id/tvPercent"
+                    tools:progress="70" />
+
+                <TextView
+                    android:id="@+id/tvTag"
+                    style="@style/RetroBody"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:textColor="@color/silver"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvRankLabel"
+                    app:layout_constraintTop_toBottomOf="@id/pbScore"
+                    tools:text="1 more for ALPHA!" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tvRankCaption"
+                style="@style/RetroBody"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:textColor="@color/sky_blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardRank"
+                app:layout_constraintWidth_max="440dp"
+                tools:text="&quot;Don't worry kitten, admin is an alpha wolf with a computer&quot;" />
+
+            <!-- Stats row: CORRECT / WRONG / TOTAL -->
+            <LinearLayout
+                android:id="@+id/rowStats"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvRankCaption"
+                app:layout_constraintWidth_max="440dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_frame_correct"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/tvCorrectCount"
+                        style="@style/PixelLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/neon_green"
+                        android:textSize="16sp"
+                        tools:text="7" />
+
+                    <TextView
+                        style="@style/RetroBody"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/label_correct"
+                        android:textColor="@color/silver"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_frame_wrong"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/tvWrongCount"
+                        style="@style/PixelLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/pink_error"
+                        android:textSize="16sp"
+                        tools:text="3" />
+
+                    <TextView
+                        style="@style/RetroBody"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/label_wrong"
+                        android:textColor="@color/silver"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_frame_yellow"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/tvTotalCount"
+                        style="@style/PixelLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/moon_yellow"
+                        android:textSize="16sp"
+                        tools:text="10" />
+
+                    <TextView
+                        style="@style/RetroBody"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/label_total"
+                        android:textColor="@color/silver"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvBattleLog"
+                style="@style/PixelLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="@string/label_battle_log"
+                android:textColor="@color/bone_white"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rowStats"
+                app:layout_constraintWidth_max="440dp" />
+
+            <!-- Breakdown rows are inflated here from item_breakdown.xml -->
+            <LinearLayout
+                android:id="@+id/llBreakdown"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvBattleLog"
+                app:layout_constraintWidth_max="440dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnPlayAgain"
+                style="@style/PixelButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/btn_play_again"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/llBreakdown"
+                app:layout_constraintWidth_max="440dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnNewPlayer"
+                style="@style/OptionButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/press_start_2p"
+                android:gravity="center"
+                android:text="@string/btn_new_player"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnPlayAgain"
+                app:layout_constraintWidth_max="440dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

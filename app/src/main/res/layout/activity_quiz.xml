@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- QUIZ ACTIVITY: HUD, feedback picture, question card, 4 choice buttons.
+     The <data> block binds a Question object straight into the widgets. -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="question"
+            type="com.example.smartlearningtriviahub.model.Question" />
+    </data>
+
+    <ScrollView
+        android:id="@+id/scrollQuiz"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/night"
+        android:fillViewport="true"
+        tools:context=".QuizActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="28dp">
+
+            <!-- HUD: question counter + score -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/hud"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_hud"
+                android:paddingStart="16dp"
+                android:paddingTop="14dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_max="440dp">
+
+                <TextView
+                    android:id="@+id/tvQuestionCounter"
+                    style="@style/PixelLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/sky_blue"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Q 03/10" />
+
+                <TextView
+                    android:id="@+id/tvScore"
+                    style="@style/PixelLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/moon_yellow"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="SCORE 0003" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ProgressBar
+                android:id="@+id/pbQuiz"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="18dp"
+                android:layout_marginTop="14dp"
+                android:max="10"
+                android:progressDrawable="@drawable/progress_pixel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hud"
+                app:layout_constraintWidth_max="440dp"
+                tools:progress="3" />
+
+            <!-- LOADING / ERROR state -->
+            <ProgressBar
+                android:id="@+id/pbLoading"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="80dp"
+                android:indeterminateTint="@color/moon_yellow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pbQuiz" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                style="@style/RetroBody"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/loading_questions"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pbLoading"
+                app:layout_constraintWidth_max="440dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnRetry"
+                style="@style/PixelButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/btn_retry"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvStatus"
+                app:layout_constraintWidth_max="320dp" />
+
+            <!-- FEEDBACK: picture (ImageView) + speech bubble -->
+            <ImageView
+                android:id="@+id/ivFeedback"
+                android:layout_width="132dp"
+                android:layout_height="124dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_frame_neutral"
+                android:contentDescription="@string/cd_feedback"
+                android:padding="4dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_wolf"
+                app:layout_constraintEnd_toStartOf="@id/bubble"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pbQuiz" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/bubble"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="14dp"
+                android:background="@drawable/bg_bubble_neutral"
+                android:padding="12dp"
+                app:layout_constraintBottom_toBottomOf="@id/ivFeedback"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivFeedback"
+                app:layout_constraintTop_toTopOf="@id/ivFeedback"
+                app:layout_constraintWidth_max="294dp">
+
+                <TextView
+                    android:id="@+id/tvVerdict"
+                    style="@style/PixelLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/verdict_ready"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@id/tvCaption"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/tvCaption"
+                    style="@style/RetroBody"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:lineSpacingMultiplier="0.9"
+                    android:text="@string/caption_ready"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toTopOf="@id/tvSub"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvVerdict" />
+
+                <TextView
+                    android:id="@+id/tvSub"
+                    style="@style/RetroBody"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/sub_ready"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvCaption" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- QUESTION CARD (text comes from Data Binding) -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardQuestion"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_question_card"
+                android:padding="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivFeedback"
+                app:layout_constraintWidth_max="440dp">
+
+                <TextView
+                    android:id="@+id/tvCategory"
+                    style="@style/PixelLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingMultiplier="1.4"
+                    android:text="@{question.categoryLabel}"
+                    android:textColor="@color/sky_blue"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="SCIENCE &amp; NATURE · MEDIUM" />
+
+                <TextView
+                    android:id="@+id/tvQuestion"
+                    style="@style/RetroBody"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@{question.questionText}"
+                    android:textSize="26sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvCategory"
+                    tools:text="What is the hardest natural substance on Earth?" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- 4 CHOICE BUTTONS (text comes from Data Binding) -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnOption1"
+                style="@style/OptionButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="@{question.options[0]}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardQuestion"
+                app:layout_constraintWidth_max="440dp"
+                tools:text="Gold" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnOption2"
+                style="@style/OptionButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@{question.options[1]}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnOption1"
+                app:layout_constraintWidth_max="440dp"
+                tools:text="Iron" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnOption3"
+                style="@style/OptionButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@{question.options[2]}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnOption2"
+                app:layout_constraintWidth_max="440dp"
+                tools:text="Diamond" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnOption4"
+                style="@style/OptionButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@{question.options[3]}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnOption3"
+                app:layout_constraintWidth_max="440dp"
+                tools:text="Platinum" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnNext"
+                style="@style/PixelButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:enabled="false"
+                android:text="@string/btn_next"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnOption4"
+                app:layout_constraintWidth_max="440dp" />
+
+            <!-- Everything that hides while questions are downloading -->
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/groupQuiz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="ivFeedback,bubble,cardQuestion,btnOption1,btnOption2,btnOption3,btnOption4,btnNext" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
