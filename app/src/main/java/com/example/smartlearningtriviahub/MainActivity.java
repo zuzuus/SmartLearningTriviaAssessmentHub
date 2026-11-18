@@ -3,12 +3,14 @@ package com.example.smartlearningtriviahub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
+import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.databinding.DataBindingUtil;
@@ -17,72 +19,74 @@ import com.example.smartlearningtriviahub.databinding.ActivityMainBinding;
 
 import java.util.Locale;
 
-/**
- * MAIN ACTIVITY - User Registration & Entrance.
- * Collects and validates student details, logs all 7 lifecycle callbacks,
- * then starts QuizActivity with an explicit Intent + Bundle.
- */
+// Registration screen. Checks the student details, then opens the quiz.
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    // Bundle keys shared by all three activities
-    public static final String KEY_NAME = "key_name";
-    public static final String KEY_STUDENT_ID = "key_student_id";
-    public static final String KEY_PROGRAM = "key_program";
+    // Bundle keys used by all 3 activities
+    public static final String KEY_NAME = "name";
+    public static final String KEY_STUDENT_ID = "student_id";
+    public static final String KEY_PROGRAM = "program";
 
-    // Validation patterns
+    // Name: letters only, 3 to 50 characters
     private static final String NAME_PATTERN = "^[A-Za-z@'. -]{3,50}$";
-    private static final String STUDENT_ID_PATTERN = "^[A-Z]{3}\\d{8}$";   // e.g. CBS24070636
+    // Student ID: 3 letters + 8 digits, e.g. CBS24070636
+    private static final String STUDENT_ID_PATTERN = "^[A-Z]{3}\\d{8}$";
 
     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Data Binding replaces setContentView + findViewById
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        applySystemBarPadding();
-        Log.d(TAG, "onCreate: MainActivity created, layout bound");
+        Log.d(TAG, "onCreate");
 
-        binding.btnStart.setOnClickListener(v -> onStartClicked());
+        handleSystemBars();
+
+        binding.btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startQuiz();
+            }
+        });
     }
 
-    private void onStartClicked() {
-        Log.d(TAG, "onStartClicked: START GAME pressed, validating input");
+    private void startQuiz() {
+        // Stop here if any field is wrong.
         if (!validateInputs()) {
+            Log.w(TAG, "Start stopped: invalid input");
             Toast.makeText(this, R.string.toast_fix_fields, Toast.LENGTH_SHORT).show();
-            Log.w(TAG, "onStartClicked: validation failed");
             return;
         }
 
-        String name = binding.etName.getText().toString().trim();
-        String studentId = binding.etStudentId.getText().toString().trim().toUpperCase(Locale.ROOT);
-        String program = binding.etProgram.getText().toString().trim().toUpperCase(Locale.ROOT);
+        String name = getText(binding.etName);
+        String studentId = getText(binding.etStudentId).toUpperCase(Locale.ROOT);
+        String program = getText(binding.etProgram).toUpperCase(Locale.ROOT);
 
-        // Explicit Intent + Bundle payload
+        // Put the details in a Bundle and send them with an explicit Intent.
         Bundle bundle = new Bundle();
         bundle.putString(KEY_NAME, name);
         bundle.putString(KEY_STUDENT_ID, studentId);
         bundle.putString(KEY_PROGRAM, program);
 
-        Intent intent = new Intent(MainActivity.this, QuizActivity.class);
+        Intent intent = new Intent(this, QuizActivity.class);
         intent.putExtras(bundle);
 
+        Log.i(TAG, "Opening quiz for " + name + " (" + studentId + ")");
         Toast.makeText(this, getString(R.string.toast_welcome, name), Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "onStartClicked: navigating to QuizActivity with " + name + " / " + studentId);
         startActivity(intent);
     }
 
-    /** Checks every field, shows red borders + messages, returns true only if all are valid. */
+    // Checks every field. Wrong fields get a red border and a message.
     private boolean validateInputs() {
         boolean valid = true;
 
-        String name = binding.etName.getText().toString().trim();
-        String studentId = binding.etStudentId.getText().toString().trim().toUpperCase(Locale.ROOT);
-        String program = binding.etProgram.getText().toString().trim();
+        String name = getText(binding.etName);
+        String studentId = getText(binding.etStudentId).toUpperCase(Locale.ROOT);
+        String program = getText(binding.etProgram);
 
-        // NAME
+        // Validate name.
         if (name.isEmpty()) {
             showError(binding.etName, binding.tvNameError, R.string.error_name_empty);
             valid = false;
@@ -93,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             clearError(binding.etName, binding.tvNameError);
         }
 
-        // STUDENT ID
+        // Validate student ID.
         if (studentId.isEmpty()) {
             showError(binding.etStudentId, binding.tvIdError, R.string.error_id_empty);
             valid = false;
@@ -104,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
             clearError(binding.etStudentId, binding.tvIdError);
         }
 
-        // PROGRAM / GROUP
+        // Validate program / group.
         if (program.isEmpty()) {
             showError(binding.etProgram, binding.tvProgramError, R.string.error_program_empty);
             valid = false;
@@ -115,61 +119,70 @@ public class MainActivity extends AppCompatActivity {
         return valid;
     }
 
-    private void showError(EditText field, TextView errorView, int messageRes) {
+    private String getText(EditText field) {
+        return field.getText().toString().trim();
+    }
+
+    private void showError(EditText field, TextView errorText, int message) {
         field.setBackgroundResource(R.drawable.bg_input_error);
-        errorView.setText(messageRes);
-        errorView.setVisibility(TextView.VISIBLE);
+        errorText.setText(message);
+        errorText.setVisibility(View.VISIBLE);
     }
 
-    private void clearError(EditText field, TextView errorView) {
+    private void clearError(EditText field, TextView errorText) {
         field.setBackgroundResource(R.drawable.bg_input);
-        errorView.setVisibility(TextView.GONE);
+        errorText.setVisibility(View.GONE);
     }
 
-    /** Keeps content out from under the status / navigation bars (edge-to-edge on Android 15+). */
-    private void applySystemBarPadding() {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (view, insets) -> {
-            Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            view.setPadding(bars.left, bars.top, bars.right, bars.bottom);
-            return insets;
-        });
+    // Keeps the layout away from the status bar and navigation bar.
+    private void handleSystemBars() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(),
+                new OnApplyWindowInsetsListener() {
+                    @Override
+                    public WindowInsetsCompat onApplyWindowInsets(View view,
+                                                                  WindowInsetsCompat insets) {
+                        Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+                        view.setPadding(bars.left, bars.top, bars.right, bars.bottom);
+                        return insets;
+                    }
+                });
     }
 
-    // ---------------- Activity lifecycle (all 7 callbacks) ----------------
+    // ----- Activity life cycle (open Logcat and filter "MainActivity") -----
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG, "onStart: MainActivity is becoming visible");
+        Log.d(TAG, "onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume: MainActivity is in the foreground and interactive");
+        Log.d(TAG, "onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG, "onPause: MainActivity is partially hidden");
+        Log.d(TAG, "onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d(TAG, "onStop: MainActivity is no longer visible");
+        Log.d(TAG, "onStop");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d(TAG, "onRestart: MainActivity is coming back after being stopped");
+        Log.d(TAG, "onRestart");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "onDestroy: MainActivity is being destroyed");
+        Log.d(TAG, "onDestroy");
     }
 }
